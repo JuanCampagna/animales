@@ -72,7 +72,7 @@ describe('Lista de animales', () => {
     it('determina los resultados utilizando Array.filter', () => {
       chai.spy.on(animales, "filter");
 
-      const perros = animales.filter(animal => animal.tipo == 'perro')
+      const perros = lista.perros()
 
       expect(animales.filter).to.have.been.called()
     })
