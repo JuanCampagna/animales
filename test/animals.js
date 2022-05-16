@@ -3,7 +3,9 @@ const chai  = require('chai')
 const spies = require('chai-spies')
 const { expect } = chai
 
-const animalesReales = [
+chai.use(spies)
+
+const animales = [
   {
     nombre: 'Puchi',
     tipo: 'perro'
@@ -40,14 +42,15 @@ describe('Lista de animales', () => {
 
   describe('#perros', () => {
     it('devuelve los animales que son perros', () => {
-      lista.animalesACargar(animalesReales)
-      const perros = animalesReales.filter(animal => animal.tipo == 'perro')
+      lista.animalesACargar(animales)
+      const perros = animales.filter(animal => animal.tipo == 'perro')
       expect(lista.perros()).to.eql(perros)
     })
   })
 
   describe('#gatos', () => {
     it('devuelve los animales que son gatos', () => {
+      lista.animalesACargar(animales)
       const gatos = [{
         nombre: 'Michi',
         tipo: 'gato'
@@ -58,6 +61,7 @@ describe('Lista de animales', () => {
 
   describe('#otros', () => {
     it('devuelve los animales que no son perros ni gatos', () => {
+      lista.animalesACargar(animales)
       const otros = [{
         nombre: 'Pegaso',
         tipo: 'escorpion'
@@ -66,6 +70,10 @@ describe('Lista de animales', () => {
     })
 
     it('determina los resultados utilizando Array.filter', () => {
+      chai.spy.on(animales, "filter");
+
+      const perros = animales.filter(animal => animal.tipo == 'perro')
+
       expect(animales.filter).to.have.been.called()
     })
   })
